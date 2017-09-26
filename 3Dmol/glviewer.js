@@ -1780,8 +1780,8 @@ $3Dmol.GLViewer = (function() {
          * @param {Object} style
          */
         this.addResLabels = function(sel, style) {
-            applyToModels("addResLabels", sel, this, style);
-            return this;
+            var save = applyToModels("addResLabels", sel, this, style);
+            return save;
         }
 
         /**
@@ -2652,17 +2652,20 @@ $3Dmol.GLViewer = (function() {
                     ms = [ ms ];
             }
             
-            
+            var rets = [];
             for (var i = 0; i < ms.length; i++) {
                 if (ms[i] || typeof ms[i] === 'number') {
                     //allow referencing models by order of creation
                     if(typeof ms[i] === 'number') {
-                        models[ms[i]][func](sel, value1, value2, value3);
+                        rets.push(models[ms[i]][func](sel, value1, value2, value3));
                     } else { //assume model object
-                        ms[i][func](sel, value1, value2, value3);
+                        rets.push(ms[i][func](sel, value1, value2, value3));
                     }
                 }
             }
+            if(rets.length ==1)
+                rets = rets[0];
+            return rets;
         }
 
         /**
