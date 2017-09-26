@@ -2416,6 +2416,7 @@ $3Dmol.GLModel = (function() {
         this.addResLabels = function(sel, viewer, style) {
             var atoms = this.selectedAtoms(sel, atoms);
             var bylabel = {}
+            var ids = [];
             //collect by chain:resn:resi
             for(var i = 0; i < atoms.length; i++) {
                 var a = atoms[i];
@@ -2445,11 +2446,12 @@ $3Dmol.GLModel = (function() {
                             }
                             sum.divideScalar(atoms.length);
                             mystyle.position = sum;
-                            viewer.addLabel(label, mystyle);
+                            ids.push(viewer.addLabel(label, mystyle).id);
                         }                        
                     }
                 }
             }
+            return ids;
         }
 
 
